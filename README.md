@@ -10,17 +10,12 @@ The secure, Royal Blue entry point for authorized healthcare personnel.
 The application follows a strict logic path to ensure patient data is captured before any financial transaction is authorized:
 
 ## 📱 Interface Showcase
-A look at the professional, Royal Blue healthcare portal and the real-time blockchain integration.
+A look at the professional, Royal Blue healthcare portal and real-time blockchain integration.
 
-| User Experience (Live Flow) | Identity & Portal UI |
-| :--- | :--- |
-| ![Xpay Live Flow](./public/0210.gif) | ![Xpay Portal UI](./public/Xpay3.jpg) |
-| *Live demonstration of the procurement and signing flow.* | *Verified portal access for Gabriel Casillas.* |
-
-| Xaman Wallet Integration | Transaction Ledger |
-| :--- | :--- |
-| ![Xaman Signing](./public/Xpay4.png) | ![Transaction History](./public/Xpay8.jpg) |
-| *Secure, non-custodial authorization via XRPL.* | *Auditable, real-time transaction history.* |
+| User Experience & Identity | Xaman Wallet & Transaction Ledger |
+| :---: | :---: |
+| ![Live Flow](./public/0210.gif) <br> *Procurement & Signing* | ![Wallet Integration](./public/Xpay4.png) <br> *Non-custodial Authorization* |
+| ![Portal UI](./public/Xpay3.png) <br> *Verified Portal Access* | ![Transaction Ledger](./public/Xpay8.png) <br> *Auditable History* |
 
 Code snippet
 graph TD
