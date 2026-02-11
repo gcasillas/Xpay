@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "events": "^3.3.0",
+    "firebase": "^12.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
+    "react-router-dom": "^7.13.0",
     "xumm": "^1.5.5"
   },
   "devDependencies": {

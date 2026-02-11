@@ -4,9 +4,10 @@
   line-height: 24px;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Theme: Royal Blue Healthcare Tech */
+  color-scheme: dark;
+  color: #ffffff;
+  background-color: #4169E1; /* Royal Blue */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,54 +18,53 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #a0c4ff; /* Lighter blue for links to contrast with background */
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #ffffff;
 }
 
 body {
   margin: 0;
   display: flex;
   place-items: center;
+  justify-content: center; /* Centers the portal content */
   min-width: 320px;
   min-height: 100vh;
+  /* subtle gradient to give it depth */
+  background: linear-gradient(135deg, #4169E1 0%, #27408B 100%);
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: all 0.25s;
+  backdrop-filter: blur(5px);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: #ffffff;
+  transform: translateY(-1px);
 }
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto rgba(255, 255, 255, 0.5);
+}
+
+/* Removed the light-mode media query to keep the Royal Blue theme consistent */

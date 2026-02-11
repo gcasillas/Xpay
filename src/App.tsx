@@ -1,90 +1,52 @@
-import { useState } from 'react'
-import './App.css'
-import {Xumm} from 'xumm'
-
-const xumm = new Xumm('your-api-key-uuid') // Some API Key
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LandingPage } from './pages/LandingPage';
+import { ItemPage } from './pages/ItemPage';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { OnboardingPage } from './pages/OnboardingPage';
+import { SuccessPage } from './pages/SuccessPage';
 
 function App() {
-  const [account, setAccount] = useState('')
-  const [payloadUuid, setPayloadUuid] = useState('')
-  const [lastPayloadUpdate, setLastPayloadUpdate] = useState('')
-  const [openPayloadUrl, setOpenPayloadUrl] = useState('')
-  const [appName, setAppName] = useState('')
-
-  xumm.user.account.then(a => setAccount(a ?? ''))
-  xumm.environment.jwt?.then(j => setAppName(j?.app_name ?? ''))
-
-  const logout = () => {
-    xumm.logout()
-    setAccount('')
-  }
-
-  const createPayload = async () => {
-    const payload = await xumm.payload?.createAndSubscribe({
-      TransactionType: 'Payment',
-      Destination: 'rwietsevLFg8XSmG3bEZzFein1g8RBqWDZ',
-      Account: account,
-      Amount: String(1337),
-    }, event => {
-      // Return if signed or not signed (rejected)
-      setLastPayloadUpdate(JSON.stringify(event.data, null, 2))
-
-      // Only return (websocket will live till non void)
-      if (Object.keys(event.data).indexOf('signed') > -1) {
-        return true
-      }
-    })
-
-    if (payload) {
-      setPayloadUuid(payload.created.uuid)
-
-      if (xumm.runtime.xapp) {
-        xumm.xapp?.openSignRequest(payload.created)
-      } else {
-        if (payload.created.pushed && payload.created.next?.no_push_msg_received) {
-          setOpenPayloadUrl(payload.created.next.no_push_msg_received)
-        } else {
-          window.open(payload.created.next.always)
-        }
-      }
-    }
-
-    return payload
-  }
-
   return (
-    <div className="App">
-      <h2>{ appName }</h2>
-      <div>
-        Hi <b>{ account }</b>
+    <Router>
+      <div className="App">
+        <Routes>
+          {/* Public Route - The Front Door */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* This is the "Portal" page. 
+              Must be plural '/items' to match your redirects and fix the black screen. 
+          */}
+          <Route 
+            path="/items" 
+            element={
+              <ProtectedRoute>
+                <ItemPage />
+              </ProtectedRoute>
+            } 
+          />
+
+          <Route 
+            path="/onboarding" 
+            element={
+              <ProtectedRoute>
+                <OnboardingPage />
+              </ProtectedRoute>
+            } 
+          />
+
+          {/* Success Route - Handles the Xaman redirect via return_url */}
+          <Route 
+            path="/success" 
+            element={
+              <ProtectedRoute>
+                <SuccessPage />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
       </div>
-      {
-        account === '' && !xumm.runtime.xapp
-          ? <button onClick={xumm.authorize}>Sign in</button>
-          : ''
-      }
-      {
-        account !== ''
-          ? <>
-              <button onClick={createPayload}>Make a payment</button>
-              &nbsp;- or -&nbsp;
-              <button onClick={logout}>Sign Out</button>
-            </>
-          : ''
-      }
-      <br />
-      <br />
-      <code>{payloadUuid}</code>
-      {
-        payloadUuid
-          ? openPayloadUrl !== ''
-            ? <b><br /><a href={openPayloadUrl} target="_blank">Payload Pushed, no push received? Open Payload...</a></b>
-            : 'Payload pushed'
-          : ''
-      }
-      <pre>{ lastPayloadUpdate }</pre>
-    </div>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
